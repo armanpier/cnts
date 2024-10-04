@@ -75,7 +75,8 @@
        "outbounds": [
          "auto",
          "direct",
-         "1.hysteria_"
+         "1.hysteria_",
+         "2.hysteria_"
        ],
        "tag": "proxy",
        "type": "selector"
@@ -83,7 +84,8 @@
      {
        "interval": "10m",
        "outbounds": [
-         "1.hysteria_"
+         "1.hysteria_",
+         "2.hysteria_"
        ],
        "tag": "auto",
        "tolerance": 50,
@@ -107,6 +109,21 @@
        "server": "45.91.171.160",
        "server_port": 443,
        "tag": "1.hysteria_",
+       "tls": {
+         "alpn": [
+           "h3"
+         ],
+         "enabled": true,
+         "insecure": true,
+         "server_name": "www.rule.io"
+       },
+       "type": "hysteria2"
+     },
+     {
+       "password": "ncfdRvLBJA",
+       "server": "45.91.171.85",
+       "server_port": 443,
+       "tag": "2.hysteria_",
        "tls": {
          "alpn": [
            "h3"
