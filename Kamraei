@@ -83,7 +83,8 @@
          "direct",
          "1.hysteria_",
          "2.hysteria_",
-         "Hy_20"
+         "1.Hy_20",
+         "2.Hy_20"
        ],
        "tag": "proxy",
        "type": "selector"
@@ -93,7 +94,8 @@
        "outbounds": [
          "1.hysteria_",
          "2.hysteria_",
-         "Hy_20"
+         "1.Hy_20",
+         "2.Hy_20"
        ],
        "tag": "auto",
        "tolerance": 50,
@@ -129,7 +131,7 @@
      },
      {
        "password": "yL6n1lq2iU",
-       "server": "45.91.171.85",
+       "server": "45.91.171.124",
        "server_port": 443,
        "tag": "2.hysteria_",
        "tls": {
@@ -144,9 +146,24 @@
      },
      {
        "password": "yL6n1lq2iU",
-       "server": "hyp.pneumonoultramicroscopicsilicovolcanoconiosisisnotadisease.blog",
+       "server": "45.91.171.124",
        "server_port": 20,
-       "tag": "Hy_20",
+       "tag": "1.Hy_20",
+       "tls": {
+         "alpn": [
+           "h3"
+         ],
+         "enabled": true,
+         "insecure": true,
+         "server_name": "www.unscreen.com"
+       },
+       "type": "hysteria2"
+     },
+     {
+       "password": "yL6n1lq2iU",
+       "server": "45.91.171.160",
+       "server_port": 20,
+       "tag": "2.Hy_20",
        "tls": {
          "alpn": [
            "h3"
