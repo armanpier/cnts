@@ -18,6 +18,12 @@
        {
          "clash_mode": "Direct",
          "server": "direct-dns"
+       },
+       {
+         "rule_set": [
+           "geosite-ir"
+         ],
+         "server": "direct-dns"
        }
      ],
      "servers": [
@@ -76,7 +82,8 @@
          "auto",
          "direct",
          "1.hysteria_",
-         "2.hysteria_"
+         "2.hysteria_",
+         "Hy_20"
        ],
        "tag": "proxy",
        "type": "selector"
@@ -85,7 +92,8 @@
        "interval": "10m",
        "outbounds": [
          "1.hysteria_",
-         "2.hysteria_"
+         "2.hysteria_",
+         "Hy_20"
        ],
        "tag": "auto",
        "tolerance": 50,
@@ -131,6 +139,21 @@
          "enabled": true,
          "insecure": true,
          "server_name": "www.rule.io"
+       },
+       "type": "hysteria2"
+     },
+     {
+       "password": "WR9uvUI9dE",
+       "server": "hyp.pneumonoultramicroscopicsilicovolcanoconiosisisnotadisease.blog",
+       "server_port": 20,
+       "tag": "Hy_20",
+       "tls": {
+         "alpn": [
+           "h3"
+         ],
+         "enabled": true,
+         "insecure": true,
+         "server_name": "www.unscreen.com"
        },
        "type": "hysteria2"
      }
