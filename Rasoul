@@ -28,7 +28,7 @@
      ],
      "servers": [
        {
-         "address": "tcp://8.8.4.4",
+         "address": "https://cloudflare-dns.com/dns-query",
          "address_resolver": "local-dns",
          "detour": "proxy",
          "tag": "proxy-dns"
@@ -81,8 +81,6 @@
        "outbounds": [
          "auto",
          "direct",
-         "1.hysteria_",
-         "2.hysteria_",
          "1.Hy_20",
          "2.Hy_20"
        ],
@@ -92,8 +90,6 @@
      {
        "interval": "10m",
        "outbounds": [
-         "1.hysteria_",
-         "2.hysteria_",
          "1.Hy_20",
          "2.Hy_20"
        ],
@@ -116,36 +112,6 @@
      },
      {
        "password": "88TRoXYHpP",
-       "server": "45.91.171.160",
-       "server_port": 443,
-       "tag": "1.hysteria_",
-       "tls": {
-         "alpn": [
-           "h3"
-         ],
-         "enabled": true,
-         "insecure": true,
-         "server_name": "www.rule.io"
-       },
-       "type": "hysteria2"
-     },
-     {
-       "password": "88TRoXYHpP",
-       "server": "45.91.171.124",
-       "server_port": 443,
-       "tag": "2.hysteria_",
-       "tls": {
-         "alpn": [
-           "h3"
-         ],
-         "enabled": true,
-         "insecure": true,
-         "server_name": "www.rule.io"
-       },
-       "type": "hysteria2"
-     },
-     {
-       "password": "88TRoXYHpP",
        "server": "45.91.171.124",
        "server_port": 20,
        "tag": "1.Hy_20",
@@ -161,7 +127,7 @@
      },
      {
        "password": "88TRoXYHpP",
-       "server": "45.91.171.160",
+       "server": "45.91.171.187",
        "server_port": 20,
        "tag": "2.Hy_20",
        "tls": {
