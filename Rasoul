@@ -28,7 +28,7 @@
      ],
      "servers": [
        {
-         "address": "https://cloudflare-dns.com/dns-query",
+         "address": "1.1.1.1",
          "address_resolver": "local-dns",
          "detour": "proxy",
          "tag": "proxy-dns"
