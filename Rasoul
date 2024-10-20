@@ -28,7 +28,7 @@
      ],
      "servers": [
        {
-         "address": "tcp://8.8.8.8",
+         "address": "tcp://1.1.1.1",
          "address_resolver": "local-dns",
          "detour": "proxy",
          "tag": "proxy-dns"
@@ -112,7 +112,7 @@
      },
      {
        "password": "88TRoXYHpP",
-       "server": "45.91.171.124",
+       "server": "45.91.171.123",
        "server_port": 20,
        "tag": "1.Hy_20",
        "tls": {
