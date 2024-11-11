@@ -84,6 +84,8 @@
       "outbounds": [
         "auto",
         "direct",
+        "1.hysteria_",
+        "2.hysteria_",
         "1.Hy_20",
         "2.Hy_20"
       ],
@@ -93,6 +95,8 @@
     {
       "interval": "10m",
       "outbounds": [
+        "1.hysteria_",
+        "2.hysteria_",
         "1.Hy_20",
         "2.Hy_20"
       ],
@@ -112,6 +116,44 @@
     {
       "tag": "block",
       "type": "block"
+    },
+    {
+      "obfs": {
+        "password": "39baf3f2b6e8",
+        "type": "salamander"
+      },
+      "password": "qpdKYeu9P8",
+      "server": "193.168.172.173",
+      "server_port": 443,
+      "tag": "1.hysteria_",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.rule.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "obfs": {
+        "password": "39baf3f2b6e8",
+        "type": "salamander"
+      },
+      "password": "qpdKYeu9P8",
+      "server": "91.107.156.181",
+      "server_port": 443,
+      "tag": "2.hysteria_",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.rule.io"
+      },
+      "type": "hysteria2"
     },
     {
       "password": "qpdKYeu9P8",
