@@ -58,6 +58,10 @@
       ],
       "auto_route": true,
       "endpoint_independent_nat": false,
+      "exclude_package": [
+        "ir.mci.ecareapp",
+        "com.myirancell"
+      ],
       "mtu": 9000,
       "platform": {
         "http_proxy": {
@@ -118,12 +122,8 @@
       "type": "block"
     },
     {
-      "obfs": {
-        "password": "39baf3f2b6e8",
-        "type": "salamander"
-      },
       "password": "88TRoXYHpP",
-      "server": "193.168.172.173",
+      "server": "45.91.171.160",
       "server_port": 443,
       "tag": "1.hysteria_",
       "tls": {
@@ -137,12 +137,8 @@
       "type": "hysteria2"
     },
     {
-      "obfs": {
-        "password": "39baf3f2b6e8",
-        "type": "salamander"
-      },
       "password": "88TRoXYHpP",
-      "server": "91.107.156.181",
+      "server": "45.91.171.124",
       "server_port": 443,
       "tag": "2.hysteria_",
       "tls": {
