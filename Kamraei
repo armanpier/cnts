@@ -58,6 +58,10 @@
       ],
       "auto_route": true,
       "endpoint_independent_nat": false,
+      "exclude_package": [
+        "ir.mci.ecareapp",
+        "com.myirancell"
+      ],
       "mtu": 9000,
       "platform": {
         "http_proxy": {
@@ -113,7 +117,7 @@
     },
     {
       "password": "yL6n1lq2iU",
-      "server": "193.168.172.173",
+      "server": "193.168.172.40",
       "server_port": 20,
       "tag": "1.Hy_20",
       "tls": {
