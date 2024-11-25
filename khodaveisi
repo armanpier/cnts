@@ -58,6 +58,10 @@
       ],
       "auto_route": true,
       "endpoint_independent_nat": false,
+      "exclude_package": [
+        "ir.mci.ecareapp",
+        "com.myirancell"
+      ],
       "mtu": 9000,
       "platform": {
         "http_proxy": {
@@ -84,8 +88,7 @@
       "outbounds": [
         "auto",
         "direct",
-        "1.Hy_20",
-        "2.Hy_20"
+        "1.Hy_20"
       ],
       "tag": "proxy",
       "type": "selector"
@@ -93,8 +96,7 @@
     {
       "interval": "10m",
       "outbounds": [
-        "1.Hy_20",
-        "2.Hy_20"
+        "1.Hy_20"
       ],
       "tag": "auto",
       "tolerance": 50,
@@ -115,24 +117,9 @@
     },
     {
       "password": "ncfdRvLBJA",
-      "server": "193.168.172.173",
+      "server": "193.168.172.40",
       "server_port": 20,
       "tag": "1.Hy_20",
-      "tls": {
-        "alpn": [
-          "h3"
-        ],
-        "enabled": true,
-        "insecure": true,
-        "server_name": "www.unscreen.com"
-      },
-      "type": "hysteria2"
-    },
-    {
-      "password": "ncfdRvLBJA",
-      "server": "193.168.172.173",
-      "server_port": 20,
-      "tag": "2.Hy_20",
       "tls": {
         "alpn": [
           "h3"
