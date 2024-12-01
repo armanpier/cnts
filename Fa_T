@@ -88,7 +88,9 @@
       "outbounds": [
         "auto",
         "direct",
-        "1.Hy_20"
+        "1.hysteria_",
+        "1.Hy_20",
+        "2.Hy_20"
       ],
       "tag": "proxy",
       "type": "selector"
@@ -96,7 +98,9 @@
     {
       "interval": "10m",
       "outbounds": [
-        "1.Hy_20"
+        "1.hysteria_",
+        "1.Hy_20",
+        "2.Hy_20"
       ],
       "tag": "auto",
       "tolerance": 50,
@@ -117,9 +121,39 @@
     },
     {
       "password": "qpdKYeu9P8",
-      "server": "193.168.172.40",
+      "server": "91.107.179.103",
+      "server_port": 45515,
+      "tag": "1.hysteria_",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.rule.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "password": "qpdKYeu9P8",
+      "server": "91.107.179.103",
       "server_port": 20,
       "tag": "1.Hy_20",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.unscreen.com"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "password": "qpdKYeu9P8",
+      "server": "193.168.172.173",
+      "server_port": 20,
+      "tag": "2.Hy_20",
       "tls": {
         "alpn": [
           "h3"
