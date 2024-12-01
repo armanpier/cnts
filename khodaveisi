@@ -88,6 +88,8 @@
       "outbounds": [
         "auto",
         "direct",
+        "1.hysteria_",
+        "2.hysteria_",
         "1.Hy_20",
         "2.Hy_20"
       ],
@@ -97,6 +99,8 @@
     {
       "interval": "10m",
       "outbounds": [
+        "1.hysteria_",
+        "2.hysteria_",
         "1.Hy_20",
         "2.Hy_20"
       ],
@@ -120,6 +124,36 @@
     {
       "password": "ncfdRvLBJA",
       "server": "193.168.172.173",
+      "server_port": 45500,
+      "tag": "1.hysteria_",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.rule.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "password": "ncfdRvLBJA",
+      "server": "45.91.171.101",
+      "server_port": 45500,
+      "tag": "2.hysteria_",
+      "tls": {
+        "alpn": [
+          "h3"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "www.rule.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "password": "ncfdRvLBJA",
+      "server": "193.168.172.173",
       "server_port": 20,
       "tag": "1.Hy_20",
       "tls": {
@@ -134,7 +168,7 @@
     },
     {
       "password": "ncfdRvLBJA",
-      "server": "193.168.172.173",
+      "server": "45.91.171.101",
       "server_port": 20,
       "tag": "2.Hy_20",
       "tls": {
