@@ -114,14 +114,6 @@
       "type": "direct"
     },
     {
-      "tag": "dns-out",
-      "type": "dns"
-    },
-    {
-      "tag": "block",
-      "type": "block"
-    },
-    {
       "password": "1rufmHyStR",
       "server": "193.168.172.173",
       "server_port": 45500,
