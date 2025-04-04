@@ -3,23 +3,29 @@
     "final": "local-dns",
     "rules": [
       {
+        "action": "route",
         "clash_mode": "Global",
         "server": "proxy-dns",
         "source_ip_cidr": [
-          "172.19.0.0/30"
+          "172.19.0.0/30",
+          "fdfe:dcba:9876::1/126"
         ]
       },
       {
+        "action": "route",
         "server": "proxy-dns",
         "source_ip_cidr": [
-          "172.19.0.0/30"
+          "172.19.0.0/30",
+          "fdfe:dcba:9876::1/126"
         ]
       },
       {
+        "action": "route",
         "clash_mode": "Direct",
         "server": "direct-dns"
       },
       {
+        "action": "route",
         "rule_set": [
           "geosite-ir"
         ],
@@ -28,7 +34,7 @@
     ],
     "servers": [
       {
-        "address": "tcp://1.1.1.1",
+        "address": "tcp://8.8.8.8",
         "address_resolver": "local-dns",
         "detour": "proxy",
         "tag": "proxy-dns"
@@ -39,11 +45,7 @@
         "tag": "local-dns"
       },
       {
-        "address": "rcode://success",
-        "tag": "block"
-      },
-      {
-        "address": "tcp://8.8.4.4",
+        "address": "local",
         "detour": "direct",
         "tag": "direct-dns"
       }
@@ -70,15 +72,13 @@
           "server_port": 2080
         }
       },
-      "sniff": true,
-      "stack": "system",
+      "stack": "mixed",
       "strict_route": false,
       "type": "tun"
     },
     {
       "listen": "127.0.0.1",
       "listen_port": 2080,
-      "sniff": true,
       "type": "mixed",
       "users": []
     }
@@ -89,9 +89,7 @@
         "auto",
         "direct",
         "1.hysteria_",
-        "2.hysteria_",
-        "1.Hy_20",
-        "2.Hy_20"
+        "1.vless-30067"
       ],
       "tag": "proxy",
       "type": "selector"
@@ -100,9 +98,7 @@
       "interval": "10m",
       "outbounds": [
         "1.hysteria_",
-        "2.hysteria_",
-        "1.Hy_20",
-        "2.Hy_20"
+        "1.vless-30067"
       ],
       "tag": "auto",
       "tolerance": 50,
@@ -115,7 +111,7 @@
     },
     {
       "password": "qpdKYeu9P8",
-      "server": "193.168.172.173",
+      "server": "103.45.246.51",
       "server_port": 45500,
       "tag": "1.hysteria_",
       "tls": {
@@ -129,49 +125,27 @@
       "type": "hysteria2"
     },
     {
-      "password": "qpdKYeu9P8",
-      "server": "45.91.171.101",
-      "server_port": 45500,
-      "tag": "2.hysteria_",
+      "flow": "xtls-rprx-vision",
+      "multiplex": {},
+      "server": "103.45.246.51",
+      "server_port": 30067,
+      "tag": "1.vless-30067",
       "tls": {
-        "alpn": [
-          "h3"
-        ],
         "enabled": true,
-        "insecure": true,
-        "server_name": "www.rule.io"
+        "reality": {
+          "enabled": true,
+          "public_key": "KbJHL3QKP2YAlvFWYYn5XtUgIhTC2vTn36uNEkqJ7m4",
+          "short_id": "1bfbfcf9"
+        },
+        "server_name": "rule.io",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "randomized"
+        }
       },
-      "type": "hysteria2"
-    },
-    {
-      "password": "qpdKYeu9P8",
-      "server": "193.168.172.173",
-      "server_port": 20,
-      "tag": "1.Hy_20",
-      "tls": {
-        "alpn": [
-          "h3"
-        ],
-        "enabled": true,
-        "insecure": true,
-        "server_name": "www.unscreen.com"
-      },
-      "type": "hysteria2"
-    },
-    {
-      "password": "qpdKYeu9P8",
-      "server": "45.91.171.101",
-      "server_port": 20,
-      "tag": "2.Hy_20",
-      "tls": {
-        "alpn": [
-          "h3"
-        ],
-        "enabled": true,
-        "insecure": true,
-        "server_name": "www.unscreen.com"
-      },
-      "type": "hysteria2"
+      "transport": {},
+      "type": "vless",
+      "uuid": "260e40fa-fffa-49ac-9bd1-d09f057d12e5"
     }
   ],
   "route": {
@@ -181,9 +155,23 @@
       {
         "download_detour": "direct",
         "format": "binary",
+        "tag": "geosite-private",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs"
+      },
+      {
+        "download_detour": "direct",
+        "format": "binary",
         "tag": "geosite-ir",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ir.srs"
+      },
+      {
+        "download_detour": "direct",
+        "format": "binary",
+        "tag": "geoip-private",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs"
       },
       {
         "download_detour": "direct",
@@ -195,22 +183,29 @@
     ],
     "rules": [
       {
+        "action": "sniff"
+      },
+      {
+        "action": "route",
         "clash_mode": "Direct",
         "outbound": "direct"
       },
       {
+        "action": "route",
         "clash_mode": "Global",
         "outbound": "proxy"
       },
       {
-        "outbound": "dns-out",
+        "action": "hijack-dns",
         "protocol": "dns"
       },
       {
         "outbound": "direct",
         "rule_set": [
           "geosite-ir",
-          "geoip-ir"
+          "geoip-ir",
+          "geosite-private",
+          "geoip-private"
         ]
       }
     ]
