@@ -8,32 +8,26 @@ on:
         required: true
         default: '91.223.169.169'
 
+permissions:
+  contents: write
+
 jobs:
   update-server:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Update server value in test file
       run: |
-        # Check if file exists
         if [ ! -f "test" ]; then
           echo "Error: 'test' file not found in repository root"
           exit 1
         fi
-
-        # Update the server value while preserving formatting
         sed -i 's/\("server":\s*\)"[^"]*"/\1"'"${{ inputs.new_server }}"'"/' test
-
-        # Display changes
         echo "Updated file contents:"
         cat test
 
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add test
-        git commit -m "Update server to ${{ inputs.new_server }} in test file"
-        git push
+    -
