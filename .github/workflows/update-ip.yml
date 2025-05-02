@@ -1,0 +1,40 @@
+name: Change Server in test.txt
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_server:
+        description: 'New server value (e.g., IP or domain)'
+        required: true
+        default: '127.0.0.1'
+
+jobs:
+  update-server-in-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Replace "server" in test.txt
+      run: |
+        FILE="test.txt"  # Target the specific file "test.txt"
+
+        echo "Before:"
+        cat "$FILE"
+
+        # Replace "server" values with the input server value
+        sed -i -E 's/("server": ")[^"]+(")/\1${{ github.event.inputs.new_server }}\2/g' "$FILE"
+
+        echo "After:"
+        cat "$FILE"
+
+    - name: Commit and push the changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add "$FILE"
+        git diff --cached --quiet || git commit -m "Update server in test.txt to ${{ github.event.inputs.new_server }}"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
