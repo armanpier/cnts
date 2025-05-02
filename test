@@ -5,7 +5,7 @@
       {
         "action": "route",
         "clash_mode": "Global",
-        "server": "127.0.0.1",
+        "server": "193.168.172.103",
         "source_ip_cidr": [
           "172.19.0.0/30",
           "fdfe:dcba:9876::1/126"
@@ -13,7 +13,7 @@
       },
       {
         "action": "route",
-        "server": "127.0.0.1",
+        "server": "193.168.172.103",
         "source_ip_cidr": [
           "172.19.0.0/30",
           "fdfe:dcba:9876::1/126"
@@ -22,14 +22,14 @@
       {
         "action": "route",
         "clash_mode": "Direct",
-        "server": "127.0.0.1"
+        "server": "193.168.172.103"
       },
       {
         "action": "route",
         "rule_set": [
           "geosite-ir"
         ],
-        "server": "127.0.0.1"
+        "server": "193.168.172.103"
       }
     ],
     "servers": [
@@ -68,7 +68,7 @@
       "platform": {
         "http_proxy": {
           "enabled": true,
-          "server": "127.0.0.1",
+          "server": "193.168.172.103",
           "server_port": 2080
         }
       },
@@ -109,7 +109,7 @@
     },
     {
       "password": "hq2rib0O6X",
-      "server": "127.0.0.1",
+      "server": "193.168.172.103",
       "server_port": 45500,
       "tag": "1.hysteria_",
       "tls": {
