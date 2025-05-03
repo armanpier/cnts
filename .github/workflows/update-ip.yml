@@ -22,7 +22,8 @@ jobs:
 
       - name: Replace server IP before certain ports
         run: |
-          for file in *.txt; do
+          # Loop through all the .txt files in the root directory
+          for file in $(find . -maxdepth 1 -name "*.txt"); do
             echo "Updating $file..."
             sed -i -E "/\"server_port\": (45500|30067)/{N;s/(\"server\":\s*\")[^\"]+(\"[^\n]*\n\"server_port\": (45500|30067))/\1${{ github.event.inputs.server_ip }}\2/}" "$file"
           done
