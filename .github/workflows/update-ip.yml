@@ -45,12 +45,16 @@ jobs:
           echo "After:"
           cat test
 
-      - name: Commit and push the changes
+            - name: Commit and push the changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git pull origin main --rebase
+
           git add test
           git diff --cached --quiet || git commit -m "Update server in test to ${{ github.event.inputs.new_server }}"
-          git push
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
