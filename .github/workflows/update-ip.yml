@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed for git pull --rebase to work
 
       - name: Show repository contents
         run: ls -alh
@@ -42,15 +44,3 @@ jobs:
           ' test > tmp && mv tmp test
 
           echo "After:"
-          cat test
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull origin main --rebase
-          git add test
-          git diff --cached --quiet || git commit -m "Update server in test to ${{ github.event.inputs.new_server }}"
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
