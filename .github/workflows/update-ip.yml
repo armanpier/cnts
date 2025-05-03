@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Checkout code cleanly
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0     # Needed if you rebase/pull
+          fetch-depth: 0     # get full history
+          clean: true        # remove any leftover files
 
       - name: Update JSON via github-script
         uses: actions/github-script@v6
@@ -47,9 +48,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add test
-          git diff --cached --quiet || git commit -m "Update server → ${{ github.event.inputs.new_server }}"
+          git diff --quiet --cached || git commit -m "Update server → ${{ github.event.inputs.new_server }}"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
