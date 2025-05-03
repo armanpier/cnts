@@ -1,15 +1,15 @@
-name: Update Server IP
+name: Update DNS Address in "test"
 
 on:
   workflow_dispatch:
     inputs:
-      server_ip:
-        description: 'New server IP'
+      dns_address:
+        description: 'New DNS Address (e.g., tcp://1.1.1.1)'
         required: true
-        default: '127.0.0.1'
+        default: 'tcp://8.8.8.8'
 
 jobs:
-  update-ip:
+  update-dns:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,22 +20,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Replace server IP before specific server_port values
+      - name: Replace DNS Address in "test"
         run: |
-          # Loop through all files in the root directory
-          for file in $(find . -maxdepth 1 -type f); do
-            echo "Checking $file..."
-            
-            # Use Perl to match and replace "server" before "server_port" lines
-            perl -0777 -i -pe '
-              s/"server":\s*"[^"]+"(?=\s*,\s*"server_port":\s*(45500|30067))/"server": "'"${{ github.event.inputs.server_ip }}"'"/g
-            ' "$file"
-          done
+          if [ -f "test" ]; then
+            echo "Updating test file..."
+            NEW_DNS="${{ github.event.inputs.dns_address }}"
+            perl -0777 -i -pe "s/\"address\":\s*\"tcp:\/\/[^\"]+\"/\"address\": \"$NEW_DNS\"/g" test
+          else
+            echo "File 'test' not found!"
+          fi
 
       - name: Commit and push changes
         run: |
-          git add .
-          git diff --cached --quiet || git commit -m "Update server IP to ${{ github.event.inputs.server_ip }}"
+          git add test
+          git diff --cached --quiet || git commit -m "Update DNS address in test file to ${{ github.event.inputs.dns_address }}"
           git pull --rebase
           git push
         env:
