@@ -26,8 +26,10 @@ jobs:
           for file in $(find . -maxdepth 1 -type f); do
             echo "Checking $file..."
             
-            # Using sed to look for "server": "value" before "server_port": 45500 or 30067 and replace the IP.
-            sed -i -E '/"server_port": (45500|30067)/{x;s/("server":\s*")[^"]+/\1'"${{ github.event.inputs.server_ip }}"'/;x}' "$file"
+            # Use Perl to match and replace "server" before "server_port" lines
+            perl -0777 -i -pe '
+              s/"server":\s*"[^"]+"(?=\s*,\s*"server_port":\s*(45500|30067))/"server": "'"${{ github.event.inputs.server_ip }}"'"/g
+            ' "$file"
           done
 
       - name: Commit and push changes
