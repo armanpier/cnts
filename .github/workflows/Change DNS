@@ -1,0 +1,42 @@
+name: Update DNS Address in "test"
+
+on:
+  workflow_dispatch:
+    inputs:
+      dns_address:
+        description: 'New DNS Address (e.g., tcp://1.1.1.1)'
+        required: true
+        default: 'tcp://8.8.8.8'
+
+jobs:
+  update-dns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Replace DNS Address in "test"
+        run: |
+          if [ -f "test" ]; then
+            echo "Updating test file..."
+
+            perl -0777 -i -pe '
+              s/"address":\s*"tcp:\/\/[^"]+"/"address": "'"${{ github.event.inputs.dns_address }}"'"/g
+            ' "test"
+          else
+            echo "File 'test' not found!"
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git add test
+          git diff --cached --quiet || git commit -m "Update DNS address in test file to ${{ github.event.inputs.dns_address }}"
+          git pull --rebase
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
