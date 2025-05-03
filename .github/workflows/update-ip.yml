@@ -1,58 +1,56 @@
-name: Update server for specific ports
+name: Update server IP for specific ports
 
 on:
   workflow_dispatch:
     inputs:
       new_server:
-        description: 'New server address (e.g., IP or domain)'
+        description: 'New server IP or domain'
         required: true
         default: '127.0.0.1'
 
 jobs:
-  update-server-in-test:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Update JSON file
+      - name: Update server field
         run: |
           NEW_SERVER="${{ github.event.inputs.new_server }}"
           FILE="test"
 
-          python3 - <<EOF
+          python3 -c "
 import json
+
+with open('$FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
 
 def update_server(obj):
     if isinstance(obj, dict):
-        if "server" in obj and "server_port" in obj:
-            if obj["server_port"] in [45500, 30067]:
-                obj["server"] = "$NEW_SERVER"
+        if 'server' in obj and 'server_port' in obj:
+            if obj['server_port'] in [45500, 30067]:
+                obj['server'] = '$NEW_SERVER'
         for v in obj.values():
             update_server(v)
     elif isinstance(obj, list):
         for item in obj:
             update_server(item)
 
-with open("$FILE", "r", encoding="utf-8") as f:
-    data = json.load(f)
-
 update_server(data)
 
-with open("$FILE", "w", encoding="utf-8") as f:
+with open('$FILE', 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=2)
-EOF
+"
 
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git pull origin main --rebase
           git add test
-          git diff --cached --quiet || git commit -m "Updated server to ${{ github.event.inputs.new_server }} for selected ports"
+          git diff --cached --quiet || git commit -m "Update server IP to ${{ github.event.inputs.new_server }}"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
