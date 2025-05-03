@@ -8,41 +8,48 @@ on:
         required: true
         default: '127.0.0.1'
 
- jobs:
-   update-server:
-     runs-on: ubuntu-latest
+jobs:
+  update-server:
+    runs-on: ubuntu-latest
 
-     steps:
--      - name: Checkout code
--        uses: actions/checkout@v4
--        with:
--          fetch-depth: 0
-+      - name: Checkout code (clean)
-+        uses: actions/checkout@v4
-+        with:
-+          fetch-depth: 0     # full history, required for rebase
-+          clean: true        # remove any untracked/modified files
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # Needed if you rebase/pull
 
-       - name: Write updater script
-         run: |
-           cat > update_server.py << 'PY'
-           … your Python here …
-           PY
+      - name: Update JSON via github-script
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'test';
+            const newServer = '${{ inputs.new_server }}';
 
-       - name: Run updater on test
-         run: |
-           NEW="${{ github.event.inputs.new_server }}"
-           python3 update_server.py "$NEW" test
+            let data = JSON.parse(fs.readFileSync(path, 'utf8'));
 
-       - name: Commit & push if changed
-         run: |
-           git config --global user.name "github-actions[bot]"
-           git config --global user.email "github-actions[bot]@users.noreply.github.com"
--          git pull origin main --rebase
-+          git pull origin main --rebase
-           git add test
-           git diff --quiet --cached || git commit -m "Update server to ${{ github.event.inputs.new_server }}"
-           git push origin main
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            function recurse(obj) {
+              if (Array.isArray(obj)) {
+                for (const item of obj) recurse(item);
+              } else if (obj && typeof obj === 'object') {
+                if ('server' in obj && 'server_port' in obj &&
+                    [45500, 30067].includes(obj.server_port)) {
+                  obj.server = newServer;
+                }
+                for (const key of Object.keys(obj)) recurse(obj[key]);
+              }
+            }
 
+            recurse(data);
+            fs.writeFileSync(path, JSON.stringify(data, null, 2));
+
+      - name: Commit & push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add test
+          git diff --cached --quiet || git commit -m "Update server → ${{ github.event.inputs.new_server }}"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
