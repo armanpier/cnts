@@ -20,17 +20,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Replace server IP before certain ports
+      - name: Replace server IP before specific server_port values
         run: |
-          # Loop through all the .txt files in the root directory
-          for file in $(find . -maxdepth 1 -name "*.txt"); do
-            echo "Updating $file..."
+          for file in $(find . -maxdepth 1 -type f); do
+            echo "Checking $file..."
             sed -i -E "/\"server_port\": (45500|30067)/{N;s/(\"server\":\s*\")[^\"]+(\"[^\n]*\n\"server_port\": (45500|30067))/\1${{ github.event.inputs.server_ip }}\2/}" "$file"
           done
 
       - name: Commit and push changes
         run: |
-          git add *.txt
+          git add .
           git diff --cached --quiet || git commit -m "Update server IP to ${{ github.event.inputs.server_ip }}"
           git pull --rebase
           git push
