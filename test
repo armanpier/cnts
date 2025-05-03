@@ -109,7 +109,7 @@
     },
     {
       "password": "hq2rib0O6X",
-      "server": "193.168.172.103",
+      "server": "5.5.5.5",
       "server_port": 45500,
       "tag": "1.hysteria_",
       "tls": {

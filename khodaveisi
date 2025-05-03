@@ -111,7 +111,7 @@
     },
     {
       "password": "ncfdRvLBJA",
-      "server": "193.168.172.103",
+      "server": "5.5.5.5",
       "server_port": 45500,
       "tag": "1.hysteria_",
       "tls": {
@@ -126,7 +126,7 @@
     },
     {
       "multiplex": {},
-      "server": "91.223.169.169",
+      "server": "5.5.5.5",
       "server_port": 30067,
       "tag": "1.vless-30067",
       "tls": {
