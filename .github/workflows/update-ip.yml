@@ -1,4 +1,4 @@
-name: Update server IP for specific ports
+name: Update server IP for selected ports
 
 on:
   workflow_dispatch:
@@ -9,20 +9,18 @@ on:
         default: '127.0.0.1'
 
 jobs:
-  update:
+  update-server:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Update server field in test file
+      - name: Write updater script
         run: |
-          NEW_SERVER="${{ github.event.inputs.new_server }}"
-          FILE="test"
-
-          echo "Writing Python updater script..."
-          cat << 'EOF' > update_server.py
+          cat > update_server.py << 'PY' 
 import json, sys
 
 new_server = sys.argv[1]
@@ -33,9 +31,8 @@ with open(file_path, 'r', encoding='utf-8') as f:
 
 def update_server(obj):
     if isinstance(obj, dict):
-        if 'server' in obj and 'server_port' in obj:
-            if obj['server_port'] in [45500, 30067]:
-                obj['server'] = new_server
+        if 'server' in obj and 'server_port' in obj and obj['server_port'] in [45500, 30067]:
+            obj['server'] = new_server
         for v in obj.values():
             update_server(v)
     elif isinstance(obj, list):
@@ -46,29 +43,24 @@ update_server(data)
 
 with open(file_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=2)
-EOF
+PY
 
+      - name: Run updater on test
+        run: |
+          NEW="${{ github.event.inputs.new_server }}"
           echo "Before:"
-          cat "$FILE"
-
-          echo "Running updater..."
-          python3 update_server.py "$NEW_SERVER" "$FILE"
-
+          cat test || echo "(test not found)"
+          python3 update_server.py "$NEW" test
           echo "After:"
-          cat "$FILE"
+          cat test
 
-      - name: Commit and push changes
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Commit updated file
+      - name: Commit & push if changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git pull origin main --rebase
           git add test
-          git diff --cached --quiet || git commit -m "Update server IP to ${{ github.event.inputs.new_server }}"
+          git diff --cached --quiet || git commit -m "Update server to ${{ github.event.inputs.new_server }}"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
