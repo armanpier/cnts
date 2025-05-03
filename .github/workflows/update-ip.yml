@@ -1,10 +1,10 @@
-name: Change Server in test
+name: Update server for specific ports
 
 on:
   workflow_dispatch:
     inputs:
       new_server:
-        description: 'New server value (e.g., IP or domain)'
+        description: 'New server address (e.g., IP or domain)'
         required: true
         default: '127.0.0.1'
 
@@ -13,34 +13,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Needed for git pull --rebase to work
+          fetch-depth: 0
 
-      - name: Show repository contents
-        run: ls -alh
-
-      - name: Replace "server" value before specific server_port values
+      - name: Update JSON file
         run: |
-          echo "Before:"
-          cat test || echo "test file not found"
+          NEW_SERVER="${{ github.event.inputs.new_server }}"
+          FILE="test"
 
-          awk -v new_server="${{ github.event.inputs.new_server }}" '
-          {
-            lines[NR] = $0
-            if ($0 ~ /"server_port": (45500|30067),/) {
-              for (i = NR - 1; i >= 1; i--) {
-                if (lines[i] ~ /"server": "[^"]+"/) {
-                  sub(/"server": "[^"]+"/, "\"server\": \"" new_server "\"", lines[i])
-                  break
-                }
-              }
-            }
-          }
-          END {
-            for (i = 1; i <= NR; i++) print lines[i]
-          }
-          ' test > tmp && mv tmp test
+          python3 <<EOF
+import json
 
-          echo "After:"
+def update_server(obj):
+    if isinstance(obj, dict):
+        if "server" in obj and "server_port" in obj:
+            if obj["server_port"] in [45500, 30067]:
+                obj["server"] = "${{ github.event.inputs.new_server }}"
+        for v in obj.values():
+            update_server(v)
+    elif isinstance(obj, list):
+        for item in obj:
+            update_server(item)
+
+with open("$FILE", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+update_server(data)
+
+with open("$FILE", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2)
+EOF
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main --rebase
+          git add test
+          git diff --cached --quiet || git commit -m "Updated server to ${{ github.event.inputs.new_server }} for selected ports"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
