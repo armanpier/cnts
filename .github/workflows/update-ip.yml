@@ -1,55 +1,37 @@
-name: Update server IP for selected ports
+name: Update Server IP
 
 on:
   workflow_dispatch:
     inputs:
-      new_server:
-        description: 'New server IP or domain'
+      server_ip:
+        description: 'New server IP'
         required: true
         default: '127.0.0.1'
 
 jobs:
-  update-server:
+  update-ip:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code cleanly
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0     # get full history
-          clean: true        # remove any leftover files
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Update JSON via github-script
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            const path = 'test';
-            const newServer = '${{ inputs.new_server }}';
-
-            let data = JSON.parse(fs.readFileSync(path, 'utf8'));
-
-            function recurse(obj) {
-              if (Array.isArray(obj)) {
-                for (const item of obj) recurse(item);
-              } else if (obj && typeof obj === 'object') {
-                if ('server' in obj && 'server_port' in obj &&
-                    [45500, 30067].includes(obj.server_port)) {
-                  obj.server = newServer;
-                }
-                for (const key of Object.keys(obj)) recurse(obj[key]);
-              }
-            }
-
-            recurse(data);
-            fs.writeFileSync(path, JSON.stringify(data, null, 2));
-
-      - name: Commit & push changes
+      - name: Set up Git config
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add test
-          git diff --quiet --cached || git commit -m "Update server → ${{ github.event.inputs.new_server }}"
-          git push origin main
+
+      - name: Replace server IP before certain ports
+        run: |
+          for file in *.txt; do
+            echo "Updating $file..."
+            sed -i -E "/\"server_port\": (45500|30067)/{N;s/(\"server\":\s*\")[^\"]+(\"[^\n]*\n\"server_port\": (45500|30067))/\1${{ github.event.inputs.server_ip }}\2/}" "$file"
+          done
+
+      - name: Commit and push changes
+        run: |
+          git add *.txt
+          git diff --cached --quiet || git commit -m "Update server IP to ${{ github.event.inputs.server_ip }}"
+          git pull --rebase
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
