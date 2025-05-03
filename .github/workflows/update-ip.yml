@@ -22,23 +22,23 @@ jobs:
       - name: Replace "server" before specific ports
         run: |
           echo "Before:"
-          cat test
+          cat test || echo "test file not found"
 
           awk -v new_server="${{ github.event.inputs.new_server }}" '
-            {
-              lines[NR] = $0
-              if ($0 ~ /"server_port": (45500|30067),/) {
-                for (i = NR - 1; i >= 1; i--) {
-                  if (lines[i] ~ /"server": "[^"]+"/) {
-                    sub(/"server": "[^"]+"/, "\"server\": \"" new_server "\"", lines[i])
-                    break
-                  }
+          {
+            lines[NR] = $0
+            if ($0 ~ /\"server_port\": (45500|30067),/) {
+              for (i = NR - 1; i >= 1; i--) {
+                if (lines[i] ~ /\"server\": \"[^\"]+\"/) {
+                  sub(/\"server\": \"[^\"]+\"/, "\"server\": \"" new_server "\"", lines[i])
+                  break
                 }
               }
             }
-            END {
-              for (i = 1; i <= NR; i++) print lines[i]
-            }
+          }
+          END {
+            for (i = 1; i <= NR; i++) print lines[i]
+          }
           ' test > tmp && mv tmp test
 
           echo "After:"
