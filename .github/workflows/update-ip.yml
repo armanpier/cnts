@@ -21,19 +21,21 @@ jobs:
           NEW_SERVER="${{ github.event.inputs.new_server }}"
           FILE="test"
 
-          echo "Updating server values in $FILE..."
+          echo "Writing Python updater script..."
+          cat << 'EOF' > update_server.py
+import json, sys
 
-          python3 <<EOF
-import json
+new_server = sys.argv[1]
+file_path = sys.argv[2]
 
-with open("$FILE", "r", encoding="utf-8") as f:
+with open(file_path, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 def update_server(obj):
     if isinstance(obj, dict):
         if 'server' in obj and 'server_port' in obj:
             if obj['server_port'] in [45500, 30067]:
-                obj['server'] = "$NEW_SERVER"
+                obj['server'] = new_server
         for v in obj.values():
             update_server(v)
     elif isinstance(obj, list):
@@ -42,11 +44,25 @@ def update_server(obj):
 
 update_server(data)
 
-with open("$FILE", "w", encoding="utf-8") as f:
+with open(file_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=2)
 EOF
 
+          echo "Before:"
+          cat "$FILE"
+
+          echo "Running updater..."
+          python3 update_server.py "$NEW_SERVER" "$FILE"
+
+          echo "After:"
+          cat "$FILE"
+
       - name: Commit and push changes
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Commit updated file
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
