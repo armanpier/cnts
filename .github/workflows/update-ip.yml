@@ -8,7 +8,6 @@ on:
         required: true
         default: '127.0.0.1'
 
-
 jobs:
   update-server-in-test:
     runs-on: ubuntu-latest
@@ -17,10 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug: Show repo content
+      - name: Show repository contents
         run: ls -alh
 
-      - name: Replace "server" before specific ports
+      - name: Replace "server" value before specific server_port values
         run: |
           echo "Before:"
           cat test || echo "test file not found"
@@ -28,10 +27,10 @@ jobs:
           awk -v new_server="${{ github.event.inputs.new_server }}" '
           {
             lines[NR] = $0
-            if ($0 ~ /\"server_port\": (45500|30067),/) {
+            if ($0 ~ /"server_port": (45500|30067),/) {
               for (i = NR - 1; i >= 1; i--) {
-                if (lines[i] ~ /\"server\": \"[^\"]+\"/) {
-                  sub(/\"server\": \"[^\"]+\"/, "\"server\": \"" new_server "\"", lines[i])
+                if (lines[i] ~ /"server": "[^"]+"/) {
+                  sub(/"server": "[^"]+"/, "\"server\": \"" new_server "\"", lines[i])
                   break
                 }
               }
@@ -45,16 +44,13 @@ jobs:
           echo "After:"
           cat test
 
-            - name: Commit and push the changes
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
           git pull origin main --rebase
-
           git add test
           git diff --cached --quiet || git commit -m "Update server in test to ${{ github.event.inputs.new_server }}"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
