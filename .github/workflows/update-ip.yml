@@ -8,6 +8,7 @@ on:
         required: true
         default: '127.0.0.1'
 
+
 jobs:
   update-server-in-test:
     runs-on: ubuntu-latest
