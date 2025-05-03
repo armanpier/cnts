@@ -1,4 +1,4 @@
-name: Update DNS Address in "test"
+name: Update DNS Address in "cnts/test"
 
 on:
   workflow_dispatch:
@@ -20,22 +20,24 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Replace DNS Address in "test"
-        run: |
-          if [ -f "test" ]; then
-            echo "Updating test file..."
+      - name: Debug Repository Content
+        run: ls -R cnts/
 
+      - name: Replace DNS Address in "cnts/test"
+        run: |
+          if [ -f "cnts/test" ]; then
+            echo "Updating cnts/test file..."
             perl -0777 -i -pe '
-              s/"address":\s*"tcp:\/\/[^"]+"/"address": "'"${{ github.event.inputs.dns_address }}"'"/g
-            ' "test"
+              s/"address":\s*"tcp:\/\/[^"]+"/"address": "'"${{ inputs.dns_address }}"'"/g
+            ' "cnts/test"
           else
-            echo "File 'test' not found!"
+            echo "File 'cnts/test' not found!"
           fi
 
       - name: Commit and push changes
         run: |
-          git add test
-          git diff --cached --quiet || git commit -m "Update DNS address in test file to ${{ github.event.inputs.dns_address }}"
+          git add cnts/test
+          git diff --cached --quiet || git commit -m "Update DNS address in cnts/test file to ${{ inputs.dns_address }}"
           git pull --rebase
           git push
         env:
