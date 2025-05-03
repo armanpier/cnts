@@ -18,49 +18,41 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Write updater script
-        run: |
-          cat > update_server.py << 'PY' 
-import json, sys
+      - name: Update JSON via github-script
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'test';
+            const newServer = '${{ inputs.new_server }}';
 
-new_server = sys.argv[1]
-file_path = sys.argv[2]
+            // Load and parse
+            const data = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
-with open(file_path, 'r', encoding='utf-8') as f:
-    data = json.load(f)
+            // Recursively update
+            function update(obj) {
+              if (Array.isArray(obj)) {
+                obj.forEach(update);
+              } else if (typeof obj === 'object' && obj !== null) {
+                if ('server' in obj && 'server_port' in obj
+                    && [45500, 30067].includes(obj.server_port)) {
+                  obj.server = newServer;
+                }
+                Object.values(obj).forEach(update);
+              }
+            }
+            update(data);
 
-def update_server(obj):
-    if isinstance(obj, dict):
-        if 'server' in obj and 'server_port' in obj and obj['server_port'] in [45500, 30067]:
-            obj['server'] = new_server
-        for v in obj.values():
-            update_server(v)
-    elif isinstance(obj, list):
-        for item in obj:
-            update_server(item)
+            // Write back
+            fs.writeFileSync(path, JSON.stringify(data, null, 2));
 
-update_server(data)
-
-with open(file_path, 'w', encoding='utf-8') as f:
-    json.dump(data, f, indent=2)
-PY
-
-      - name: Run updater on test
-        run: |
-          NEW="${{ github.event.inputs.new_server }}"
-          echo "Before:"
-          cat test || echo "(test not found)"
-          python3 update_server.py "$NEW" test
-          echo "After:"
-          cat test
-
-      - name: Commit & push if changed
+      - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git pull origin main --rebase
           git add test
-          git diff --cached --quiet || git commit -m "Update server to ${{ github.event.inputs.new_server }}"
+          git diff --quiet --cached || git commit -m "Update server to ${{ github.event.inputs.new_server }}"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
