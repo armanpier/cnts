@@ -23,14 +23,14 @@ jobs:
           NEW_SERVER="${{ github.event.inputs.new_server }}"
           FILE="test"
 
-          python3 <<EOF
+          python3 - <<EOF
 import json
 
 def update_server(obj):
     if isinstance(obj, dict):
         if "server" in obj and "server_port" in obj:
             if obj["server_port"] in [45500, 30067]:
-                obj["server"] = "${{ github.event.inputs.new_server }}"
+                obj["server"] = "$NEW_SERVER"
         for v in obj.values():
             update_server(v)
     elif isinstance(obj, list):
