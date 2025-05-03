@@ -22,9 +22,12 @@ jobs:
 
       - name: Replace server IP before specific server_port values
         run: |
+          # Loop through all files in the root directory
           for file in $(find . -maxdepth 1 -type f); do
             echo "Checking $file..."
-            sed -i -E "/\"server_port\": (45500|30067)/{N;s/(\"server\":\s*\")[^\"]+(\"[^\n]*\n\"server_port\": (45500|30067))/\1${{ github.event.inputs.server_ip }}\2/}" "$file"
+            
+            # Using sed to look for "server": "value" before "server_port": 45500 or 30067 and replace the IP.
+            sed -i -E '/"server_port": (45500|30067)/{x;s/("server":\s*")[^"]+/\1'"${{ github.event.inputs.server_ip }}"'/;x}' "$file"
           done
 
       - name: Commit and push changes
