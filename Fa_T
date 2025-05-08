@@ -111,7 +111,7 @@
     },
     {
       "password": "qpdKYeu9P8",
-      "server": "193.168.172.103",
+      "server": "103.45.246.203",
       "server_port": 45500,
       "tag": "1.hysteria_",
       "tls": {
@@ -127,7 +127,7 @@
     {
       "flow": "xtls-rprx-vision",
       "multiplex": {},
-      "server": "193.168.172.103",
+      "server": "103.45.246.203",
       "server_port": 30067,
       "tag": "1.vless-30067",
       "tls": {
