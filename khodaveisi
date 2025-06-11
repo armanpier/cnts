@@ -88,8 +88,9 @@
       "outbounds": [
         "auto",
         "direct",
-        "1.hysteria_",
-        "vless-30067"
+        "hysteria_",
+        "vless-30067",
+        "vmess-35783"
       ],
       "tag": "proxy",
       "type": "selector"
@@ -97,8 +98,9 @@
     {
       "interval": "10m",
       "outbounds": [
-        "1.hysteria_",
-        "vless-30067"
+        "hysteria_",
+        "vless-30067",
+        "vmess-35783"
       ],
       "tag": "auto",
       "tolerance": 50,
@@ -113,7 +115,7 @@
       "password": "ncfdRvLBJA",
       "server": "185.139.228.195",
       "server_port": 45500,
-      "tag": "1.hysteria_",
+      "tag": "hysteria_",
       "tls": {
         "alpn": [
           "h3"
@@ -135,7 +137,7 @@
         "reality": {
           "enabled": true,
           "public_key": "qFe07l2gTL3L5nxOrRDGQ9OFwqrN29IeCVxl2hL0AEM",
-          "short_id": "503f50be"
+          "short_id": "cbe30ae0a1"
         },
         "server_name": "rule.io",
         "utls": {
@@ -145,6 +147,14 @@
       },
       "transport": {},
       "type": "vless",
+      "uuid": "d14b65bf-b41d-43a3-8bb8-602414150aba"
+    },
+    {
+      "server": "185.139.228.195",
+      "server_port": 35783,
+      "tag": "vmess-35783",
+      "transport": {},
+      "type": "vmess",
       "uuid": "d14b65bf-b41d-43a3-8bb8-602414150aba"
     }
   ],
