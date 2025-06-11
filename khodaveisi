@@ -89,7 +89,6 @@
         "auto",
         "direct",
         "hysteria_",
-        "vless-30067",
         "vmess-35783"
       ],
       "tag": "proxy",
@@ -99,7 +98,6 @@
       "interval": "10m",
       "outbounds": [
         "hysteria_",
-        "vless-30067",
         "vmess-35783"
       ],
       "tag": "auto",
@@ -125,29 +123,6 @@
         "server_name": "www.rule.io"
       },
       "type": "hysteria2"
-    },
-    {
-      "flow": "xtls-rprx-vision",
-      "multiplex": {},
-      "server": "185.139.228.195",
-      "server_port": 30067,
-      "tag": "vless-30067",
-      "tls": {
-        "enabled": true,
-        "reality": {
-          "enabled": true,
-          "public_key": "qFe07l2gTL3L5nxOrRDGQ9OFwqrN29IeCVxl2hL0AEM",
-          "short_id": "cbe30ae0a1"
-        },
-        "server_name": "rule.io",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "randomized"
-        }
-      },
-      "transport": {},
-      "type": "vless",
-      "uuid": "d14b65bf-b41d-43a3-8bb8-602414150aba"
     },
     {
       "server": "185.139.228.195",
