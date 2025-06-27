@@ -40,7 +40,7 @@
         {
             "tag": "xmp.sytes.net SSH \u00a7 26829 3",
             "type": "ssh",
-            "server": "xmp.sytes.net",
+            "server": "185.247.119.125",
             "server_port": 26829,
             "user": "086a4c5c-3808-4973-aaa5-231e75694038",
             "private_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx\nOQAAACAmUGP/MIdizIYP4pE38FGjxKF1TgKXQFTtnT1xpZWLlwAAAIhsua/4bLmv+AAAAAtzc2gt\nZWQyNTUxOQAAACAmUGP/MIdizIYP4pE38FGjxKF1TgKXQFTtnT1xpZWLlwAAAEDtahN5tzUKmjk8\nJPvKZkEKMcwLBP65gMsuEo0Dqmy8oCZQY/8wh2LMhg/ikTfwUaPEoXVOApdAVO2dPXGllYuXAAAA\nAAECAwQF\n-----END OPENSSH PRIVATE KEY-----\n",
