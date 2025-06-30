@@ -42,7 +42,7 @@
         {
             "tag": "xmp.sytes.net ShadowSocks2022 \u00a7 52655 3",
             "type": "shadowsocks",
-            "server": "xmp.sytes.net",
+            "server": "185.247.119.125",
             "server_port": 52655,
             "method": "2022-blake3-aes-256-gcm",
             "password": "NzBkYzViOGU0ZjA0NGVkMTgzOTJiYTA3NDI2Y2RjNmE=:NDdiNTVkMzcwMDkxNGYzYjkxYmI0MTE1Nzg1OWU2NmU=",
@@ -54,7 +54,7 @@
         {
             "tag": "xmp.sytes.net SSH \u00a7 26829 3",
             "type": "ssh",
-            "server": "xmp.sytes.net",
+            "server": "185.247.119.125",
             "server_port": 26829,
             "user": "47b55d37-0091-4f3b-91bb-41157859e66e",
             "private_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx\nOQAAACBou2oIc2Aduk+AT6Ne0G0ku6zTAahWDP+YKNgGZljN+AAAAIjvkhfE75IXxAAAAAtzc2gt\nZWQyNTUxOQAAACBou2oIc2Aduk+AT6Ne0G0ku6zTAahWDP+YKNgGZljN+AAAAEBxFgxVR/82ap4S\n57x/acsKAQl0HugTSqzZbLSpm4tmBWi7aghzYB26T4BPo17QbSS7rNMBqFYM/5go2AZmWM34AAAA\nAAECAwQF\n-----END OPENSSH PRIVATE KEY-----\n",
