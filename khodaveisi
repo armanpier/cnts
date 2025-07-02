@@ -1,1 +1,82 @@
-dm1lc3M6Ly9ld29nSUNKaFpHUWlPaUFpT1RJdU1URTBMalV4TGpJeE5pSXNDaUFnSW1GcFpDSTZJREFzQ2lBZ0ltbGtJam9nSWpoaVpqY3dZbUV6TFdRNFlUWXRORGc0Wmkxa1pUYzRMVE13TkRZeFl6bG1OVGc1TkNJc0NpQWdJbTVsZENJNklDSjBZM0FpTEFvZ0lDSndiM0owSWpvZ05UQXpNQ3dLSUNBaWNITWlPaUFpZG0xbGMzTXRNamMwTnpNZ016QXVNREJIUXZDZms0b2dNamxFWVhsejRvK3pJaXdLSUNBaWRHeHpJam9nSW01dmJtVWlMQW9nSUNKMklqb2dNZ3A5
+{
+  "inbounds": [
+    {
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "endpoint_independent_nat": false,
+      "mtu": 9000,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 2080
+        }
+      },
+      "stack": "system",
+      "strict_route": false,
+      "type": "tun"
+    },
+    {
+      "listen": "127.0.0.1",
+      "listen_port": 2080,
+      "type": "mixed",
+      "users": []
+    }
+  ],
+  "outbounds": [
+    {
+      "outbounds": [
+        "auto",
+        "direct",
+        "1.vmess-27473"
+      ],
+      "tag": "proxy",
+      "type": "selector"
+    },
+    {
+      "interval": "10m",
+      "outbounds": [
+        "1.vmess-27473"
+      ],
+      "tag": "auto",
+      "tolerance": 50,
+      "type": "urltest",
+      "url": "http://www.gstatic.com/generate_204"
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "multiplex": {},
+      "server": "92.114.51.216",
+      "server_port": 5030,
+      "tag": "1.vmess-27473",
+      "transport": {},
+      "type": "vmess",
+      "uuid": "8bf70ba3-d8a6-488f-de78-30461c9f5894"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "proxy",
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "action": "route",
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "action": "route",
+        "clash_mode": "Global",
+        "outbound": "proxy"
+      }
+    ]
+  }
+}
