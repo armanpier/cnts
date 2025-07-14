@@ -82,7 +82,8 @@
         "auto",
         "direct",
         "1.vmess-27473",
-        "1.hysteria2-29782"
+        "1.vless-22283",
+        "1.vmess-30226"
       ],
       "tag": "proxy",
       "type": "selector"
@@ -91,7 +92,8 @@
       "interval": "10m",
       "outbounds": [
         "1.vmess-27473",
-        "1.hysteria2-29782"
+        "1.vless-22283",
+        "1.vmess-30226"
       ],
       "tag": "auto",
       "tolerance": 50,
@@ -112,16 +114,23 @@
       "uuid": "8bf70ba3-d8a6-488f-de78-30461c9f5894"
     },
     {
-      "password": "MDUU2hQy7c",
+      "multiplex": {},
       "server": "92.114.51.216",
-      "server_port": 20000,
-      "tag": "1.hysteria2-29782",
-      "tls": {
-        "enabled": true,
-        "insecure": true,
-        "server_name": "bing.com"
-      },
-      "type": "hysteria2"
+      "server_port": 5060,
+      "tag": "1.vless-22283",
+      "transport": {},
+      "type": "vless",
+      "uuid": "8bf70ba3-d8a6-488f-de78-30461c9f5894"
+    },
+    {
+      "authenticated_length": false,
+      "multiplex": {},
+      "server": "92.114.51.216",
+      "server_port": 20020,
+      "tag": "1.vmess-30226",
+      "transport": {},
+      "type": "vmess",
+      "uuid": "8bf70ba3-d8a6-488f-de78-30461c9f5894"
     }
   ],
   "route": {
