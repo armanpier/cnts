@@ -1,2 +1,5 @@
-hysteria2://lScEEA8roz@194.116.236.209:7070?security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-42963_TR
-hysteria2://lScEEA8roz@107.181.134.210:7070?fastopen=0&security=tls&insecure=1&sni=github.io#hysteria2-42963_UK
+vmess://ewogICJhZGQiOiAiMTA3LjE4MS4xMzQuMjEwIiwKICAiYWlkIjogMCwKICAiaWQiOiAiODVkNWNkYTAtOTk4OS00ODAyLTliNDgtMzM0OGIyN2RlNDkzIiwKICAibmV0IjogInRjcCIsCiAgInBvcnQiOiA1MDMwLAogICJwcyI6ICJ2bWVzc19VSyIsCiAgInRscyI6ICJub25lIiwKICAidiI6IDIKfQ==
+vmess://ewogICJhZGQiOiAiMTA5Ljk0LjE2NC44MyIsCiAgImFpZCI6IDAsCiAgImlkIjogIjg1ZDVjZGEwLTk5ODktNDgwMi05YjQ4LTMzNDhiMjdkZTQ5MyIsCiAgIm5ldCI6ICJ0Y3AiLAogICJwb3J0IjogNTAzMCwKICAicHMiOiAidm1lc3NfVUtfVFVOIiwKICAidGxzIjogIm5vbmUiLAogICJ2IjogMgp9
+hysteria2://lScEEA8roz@107.181.134.210:7070?security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-UK_UK
+hysteria2://lScEEA8roz@107.181.134.210:9090?downmbps=100&upmbps=100&security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-Family_UK
+hysteria2://lScEEA8roz@194.116.236.209:6060?security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-TR_TR
