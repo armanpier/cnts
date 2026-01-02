@@ -1,2 +1,288 @@
-vmess://ew0KICAidiI6ICIyIiwNCiAgInBzIjogInZtZXNzX1VLX1RVTiIsDQogICJhZGQiOiAiMTA5Ljk0LjE2NC44MyIsDQogICJwb3J0IjogIjUwMzAiLA0KICAiaWQiOiAiZTkwNDk4M2YtODhkNC00NGJiLTk0ZTItZTFkMDBlY2ZkY2FmIiwNCiAgImFpZCI6ICIwIiwNCiAgInNjeSI6ICJhdXRvIiwNCiAgIm5ldCI6ICJ0Y3AiLA0KICAidHlwZSI6ICJub25lIiwNCiAgImhvc3QiOiAiIiwNCiAgInBhdGgiOiAiIiwNCiAgInRscyI6ICIiLA0KICAic25pIjogIiIsDQogICJhbHBuIjogIiIsDQogICJmcCI6ICIiDQp9
-vless://e904983f-88d4-44bb-94e2-e1d00ecfdcaf@109.94.164.83:5020?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.io&fp=chrome&pbk=_i62_2b4ZSoHWG-fBczCVm_6qLYgSpWSjhTG7dPYCxo&sid=901c3c4a4cfe&type=tcp&headerType=none#vless_UK_TUN
+
+{
+  "dns": {
+    "final": "local-dns",
+    "rules": [
+      {
+        "action": "route",
+        "clash_mode": "Global",
+        "server": "proxy-dns",
+        "source_ip_cidr": [
+          "172.19.0.0/30",
+          "fdfe:dcba:9876::1/126"
+        ]
+      },
+      {
+        "action": "route",
+        "server": "proxy-dns",
+        "source_ip_cidr": [
+          "172.19.0.0/30",
+          "fdfe:dcba:9876::1/126"
+        ]
+      },
+      {
+        "action": "route",
+        "clash_mode": "Direct",
+        "server": "direct-dns"
+      }
+    ],
+    "servers": [
+      {
+        "address": "udp://1.1.1.1",
+        "address_resolver": "local-dns",
+        "detour": "proxy",
+        "server": "1.1.1.1",
+        "tag": "proxy-dns",
+        "type": "tcp"
+      },
+      {
+        "address": "local",
+        "detour": "direct",
+        "tag": "local-dns"
+      },
+      {
+        "address": "8.8.4.4",
+        "detour": "direct",
+        "server": "8.8.8.8",
+        "tag": "direct-dns",
+        "type": "tcp"
+      }
+    ],
+    "strategy": "prefer_ipv4"
+  },
+  "inbounds": [
+    {
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "endpoint_independent_nat": false,
+      "exclude_package": [
+        "ir.mci.ecareapp",
+        "com.myirancell"
+      ],
+      "mtu": 9000,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 2080
+        }
+      },
+      "stack": "mixed",
+      "strict_route": false,
+      "type": "tun"
+    },
+    {
+      "listen": "127.0.0.1",
+      "listen_port": 2080,
+      "type": "mixed",
+      "users": []
+    }
+  ],
+  "outbounds": [
+    {
+      "outbounds": [
+        "auto",
+        "direct",
+        "1.vless_UK_meli",
+        "1.hysteria2-UK_UK",
+        "1.hysteria2-TR_TR",
+        "1.vless-TR_melli"
+      ],
+      "tag": "proxy",
+      "type": "selector"
+    },
+    {
+      "interval": "10m",
+      "outbounds": [
+        "1.vless_UK_meli",
+        "1.hysteria2-UK_UK",
+        "1.hysteria2-TR_TR",
+        "1.vless-TR_melli"
+      ],
+      "tag": "auto",
+      "tolerance": 50,
+      "type": "urltest",
+      "url": "http://www.gstatic.com/generate_204"
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "flow": "xtls-rprx-vision",
+      "multiplex": {},
+      "server": "109.94.164.83",
+      "server_port": 5020,
+      "tag": "1.vless_UK_meli",
+      "tls": {
+        "enabled": true,
+        "reality": {
+          "enabled": true,
+          "public_key": "_i62_2b4ZSoHWG-fBczCVm_6qLYgSpWSjhTG7dPYCxo",
+          "short_id": "b3c3"
+        },
+        "server_name": "github.io",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {},
+      "type": "vless",
+      "uuid": "e904983f-88d4-44bb-94e2-e1d00ecfdcaf"
+    },
+    {
+      "password": "ma3RlPMR6c",
+      "server": "107.181.134.210",
+      "server_port": 7070,
+      "tag": "1.hysteria2-UK_UK",
+      "tls": {
+        "certificate": [
+          "-----BEGIN CERTIFICATE-----",
+          "MIIC+zCCAeOgAwIBAgIRAIOOgECPCl4oFFgk2p41Tc0wDQYJKoZIhvcNAQELBQAw",
+          "EzERMA8GA1UEAxMIbGlhcmEuaXIwHhcNMjUwNzE0MjI0MzEzWhcNMjYwNzE0MjM0",
+          "MzEzWjATMREwDwYDVQQDEwhsaWFyYS5pcjCCASIwDQYJKoZIhvcNAQEBBQADggEP",
+          "ADCCAQoCggEBANi30IQmVmd354tbb+YTYg7z2LfarmWEe9Joq8I0hs6z4NeqvVTf",
+          "d2+G13OPVthTVKBuNTM9jX5HQzc53htfWQxGP3/nu5Aam1ivyZ6r89SZoFrZH1WK",
+          "Z0PMO+G9PmIH6BHNuIt/Hx6X2iMzu20LJe40DiRl9xb53JlvV0c2obIVkUdyDsP2",
+          "XJEJ2cBGxNC4FzlfHooTOCJzx1uz3kNmWbgYUFJ4E1OQv1AlVXsHaZFe4Aa5cVQ0",
+          "s2Aakn4wrI07n57I0rYc9NGRdsWQkDu4Craf8bXbM782uUb09WQJjv47rgNo51DB",
+          "SGTSVGyjxvDmjOXfMjP8uTZ3jbkHxE7FeCUCAwEAAaNKMEgwDgYDVR0PAQH/BAQD",
+          "AgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwEwYDVR0RBAww",
+          "CoIIbGlhcmEuaXIwDQYJKoZIhvcNAQELBQADggEBAKty1Xk5QcMSSQJs8T5+ZTV2",
+          "skccSkPtEaMj3v98sS3hBC2D6Ebq4G9989AOisQ4uGNHJKc5sYgSNPQ8YbzkfmfI",
+          "2TzqIKOF5upz27kyB8rudwidM/CetWtGciyz+xjDmJZpG+tz6bG03K4RwquuDK7x",
+          "6s7JUzPJDDz1NJWfCuwg607dS9sB6CsBwi4xFwvZfuIIm6AxNePWf9giJPMOK4OI",
+          "hBFz298F1699Ml0lr4zP55nB7hV7fOeAgF4wUQqpyBK9GmsCvkHgSlZjMYPVjCgY",
+          "gPXJqSiI9lT0NMzMjoFV9WAaQTZ0WS0nfAcqViG+ot9zYZ/qMRswMojGAV3JkLs=",
+          "-----END CERTIFICATE-----"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "github.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "password": "ma3RlPMR6c",
+      "server": "194.116.236.209",
+      "server_port": 6060,
+      "tag": "1.hysteria2-TR_TR",
+      "tls": {
+        "certificate": [
+          "-----BEGIN CERTIFICATE-----",
+          "MIIC+zCCAeOgAwIBAgIRAIOOgECPCl4oFFgk2p41Tc0wDQYJKoZIhvcNAQELBQAw",
+          "EzERMA8GA1UEAxMIbGlhcmEuaXIwHhcNMjUwNzE0MjI0MzEzWhcNMjYwNzE0MjM0",
+          "MzEzWjATMREwDwYDVQQDEwhsaWFyYS5pcjCCASIwDQYJKoZIhvcNAQEBBQADggEP",
+          "ADCCAQoCggEBANi30IQmVmd354tbb+YTYg7z2LfarmWEe9Joq8I0hs6z4NeqvVTf",
+          "d2+G13OPVthTVKBuNTM9jX5HQzc53htfWQxGP3/nu5Aam1ivyZ6r89SZoFrZH1WK",
+          "Z0PMO+G9PmIH6BHNuIt/Hx6X2iMzu20LJe40DiRl9xb53JlvV0c2obIVkUdyDsP2",
+          "XJEJ2cBGxNC4FzlfHooTOCJzx1uz3kNmWbgYUFJ4E1OQv1AlVXsHaZFe4Aa5cVQ0",
+          "s2Aakn4wrI07n57I0rYc9NGRdsWQkDu4Craf8bXbM782uUb09WQJjv47rgNo51DB",
+          "SGTSVGyjxvDmjOXfMjP8uTZ3jbkHxE7FeCUCAwEAAaNKMEgwDgYDVR0PAQH/BAQD",
+          "AgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAwGA1UdEwEB/wQCMAAwEwYDVR0RBAww",
+          "CoIIbGlhcmEuaXIwDQYJKoZIhvcNAQELBQADggEBAKty1Xk5QcMSSQJs8T5+ZTV2",
+          "skccSkPtEaMj3v98sS3hBC2D6Ebq4G9989AOisQ4uGNHJKc5sYgSNPQ8YbzkfmfI",
+          "2TzqIKOF5upz27kyB8rudwidM/CetWtGciyz+xjDmJZpG+tz6bG03K4RwquuDK7x",
+          "6s7JUzPJDDz1NJWfCuwg607dS9sB6CsBwi4xFwvZfuIIm6AxNePWf9giJPMOK4OI",
+          "hBFz298F1699Ml0lr4zP55nB7hV7fOeAgF4wUQqpyBK9GmsCvkHgSlZjMYPVjCgY",
+          "gPXJqSiI9lT0NMzMjoFV9WAaQTZ0WS0nfAcqViG+ot9zYZ/qMRswMojGAV3JkLs=",
+          "-----END CERTIFICATE-----"
+        ],
+        "enabled": true,
+        "insecure": true,
+        "server_name": "github.io"
+      },
+      "type": "hysteria2"
+    },
+    {
+      "flow": "xtls-rprx-vision",
+      "multiplex": {},
+      "server": "109.94.164.83",
+      "server_port": 4040,
+      "tag": "1.vless-TR_melli",
+      "tls": {
+        "enabled": true,
+        "reality": {
+          "enabled": true,
+          "public_key": "VODSE4nnfte9VesWVVftk0ijokczs6I4hn5qX7Q72mY",
+          "short_id": ""
+        },
+        "server_name": "mtserver.ir",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "edge"
+        }
+      },
+      "transport": {},
+      "type": "vless",
+      "uuid": "e904983f-88d4-44bb-94e2-e1d00ecfdcaf"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "proxy",
+    "rule_set": [
+      {
+        "download_detour": "direct",
+        "format": "binary",
+        "tag": "geosite-private",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs"
+      },
+      {
+        "download_detour": "direct",
+        "format": "binary",
+        "tag": "geosite-ir",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ir.srs"
+      },
+      {
+        "download_detour": "direct",
+        "format": "binary",
+        "tag": "geoip-private",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs"
+      },
+      {
+        "download_detour": "direct",
+        "format": "binary",
+        "tag": "geoip-ir",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/ir.srs"
+      }
+    ],
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "action": "route",
+        "clash_mode": "Direct",
+        "outbound": "direct"
+      },
+      {
+        "action": "hijack-dns",
+        "protocol": "dns"
+      },
+      {
+        "action": "route",
+        "outbound": "direct",
+        "rule_set": [
+          "geoip-ir",
+          "geosite-ir",
+          "geosite-private",
+          "geoip-private"
+        ]
+      },
+      {
+        "action": "route",
+        "clash_mode": "Global",
+        "outbound": "proxy"
+      }
+    ]
+  }
+}
