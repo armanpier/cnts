@@ -1,4 +1,2 @@
 vless://791dadd5-0455-4499-ae7e-30fa71d838dc@194.116.236.209:4040?sni=github.io&flow=xtls-rprx-vision&type=tcp&security=reality&pbk=_i62_2b4ZSoHWG-fBczCVm_6qLYgSpWSjhTG7dPYCxo&sid=d2f6&fp=chrome#vless_TR_meli
-vmess://ewogICJhZGQiOiAiMTA5Ljk0LjE2NC44MyIsCiAgImFpZCI6IDAsCiAgImlkIjogIjc5MWRhZGQ1LTA0NTUtNDQ5OS1hZTdlLTMwZmE3MWQ4MzhkYyIsCiAgIm5ldCI6ICJ0Y3AiLAogICJwb3J0IjogNTAzMCwKICAicHMiOiAidm1lc3MtX1VLX01lbGkiLAogICJ0bHMiOiAibm9uZSIsCiAgInYiOiAyCn0=
-hysteria2://iWOL1qG0UL@107.181.134.210:7070?security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-UK_UK
-hysteria2://iWOL1qG0UL@194.116.236.209:6060?security=tls&insecure=1&sni=github.io&fastopen=0#hysteria2-TR_TR
+vmess://ewogICJhZGQiOiAiMTA5Ljk0LjE2NC44MyIsCiAgImFpZCI6IDAsCiAgImlkIjogIjc5MWRhZGQ1LTA0NTUtNDQ5OS1hZTdlLTMwZmE3MWQ4MzhkYyIsCiAgIm5ldCI6ICJ0Y3AiLAogICJwb3J0IjogODA4MCwKICAicHMiOiAidm1lc3MtX1RSIiwKICAidGxzIjogIm5vbmUiLAogICJ2IjogMgp9
